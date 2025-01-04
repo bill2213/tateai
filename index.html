@@ -1,0 +1,923 @@
+<html lang="en"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><div id="in-page-channel-node-id" data-channel-name="in_page_channel_6IG1z2"></div><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Fav Icon  -->
+<link rel="shortcut icon" href="https://alleycatsol.xyz/assets/img/icon-yellow-bg.jpg">
+<link rel="icon" type="image/png" href="https://alleycatsol.xyz/assets/img/icon-yellow-bg.jpg">
+<meta name="msapplication-TileColor" content="#008080">
+<meta name="theme-color" content="#008080">
+<title>AlleyCat</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+<script>
+     // Improved fetch script with local storage caching
+document.addEventListener('DOMContentLoaded', () => {
+const apiUrl = 'https://admin931.alleycatsol.xyz/api/fromAdmin';
+const totalSoldElement = document.getElementById('totalSold');
+const localStorageKey = 'alleyCatTotalSold';
+const localStorageTimestampKey = 'alleyCatTotalSoldTimestamp';
+
+// Check if we have cached data and it's not too old
+const cachedValue = localStorage.getItem(localStorageKey);
+const cachedTimestamp = localStorage.getItem(localStorageTimestampKey);
+const currentTime = Date.now();
+
+// Function to update the display and cache
+function updateTotalSold(value) {
+    totalSoldElement.innerText = value;
+    localStorage.setItem(localStorageKey, value);
+    localStorage.setItem(localStorageTimestampKey, currentTime.toString());
+}
+
+// Always attempt to fetch on first load
+fetch(apiUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const totalSold = data.progress;
+        updateTotalSold(totalSold);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        
+        // If fetch fails and we have cached data, use that
+        if (cachedValue) {
+            totalSoldElement.innerText = cachedValue + 'M';
+        } else {
+            // If no cached data, show a default value or loading state
+            totalSoldElement.innerText = 'Loading...';
+            
+            // Optional: Retry after a short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    });
+});
+</script>
+<style>
+#presale-address{
+    overflow-wrap: break-word;
+    color: #ADFF2F;
+}
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-family: "Press Start 2P", system-ui;
+        background-color: #250000;
+        background-image: linear-gradient(
+            45deg, 
+            #570000, 
+            #250000
+        );
+        color: #FFD700;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* Scan line effect */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+        );
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.3;
+    }
+
+    #game-screen {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    #header {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+    }
+    
+    #totalSold{
+         font-size: 1.3em;
+        text-shadow: 
+            2px 2px #000,
+            4px 4px #20B2AA;
+        animation: glitch-title 1.5s infinite alternate;
+    }
+
+    h1 {
+        font-size: 2.3em;
+        margin: 0;
+        text-shadow: 
+            2px 2px #000,
+            4px 4px #20B2AA;
+        animation: glitch-title 1.5s infinite alternate;
+    }
+    p, body{
+        line-height: 1.5;
+    }
+    @keyframes glitch-title {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+    }
+
+    #ico-info {
+        font-size: 1em;
+        max-width: 1000px;
+        margin: 20px auto;
+        line-height: 1.3em;
+        position: relative;
+    }
+
+    #main-content {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        perspective: 1000px;
+    }
+
+    .coin-stack {
+        width: 20%;
+        height: auto;
+        text-align: center;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+
+    .coin-stack:hover {
+        transform: scale(1.05) rotateY(10deg);
+    }
+
+    .coin-stack img {
+        width: 60%;
+        margin: 0 auto;
+        height: auto;
+        /*box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
+    }
+    .coin-stack iframe {
+height: 150px;
+width: 240px;
+border: 3px solid transparent;
+border-radius: 8px;
+box-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 40px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+0% {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.6), 0 0 30px rgba(255, 0, 255, 0.4), 0 0 50px rgba(0, 255, 255, 0.3);
+}
+50% {
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 40px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+}
+100% {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.6), 0 0 30px rgba(255, 0, 255, 0.4), 0 0 50px rgba(0, 255, 255, 0.3);
+}
+}
+
+    @keyframes glitch {
+0% { transform: translate(0); filter: hue-rotate(0deg); }
+20% { transform: translate(-2px, 2px); filter: hue-rotate(20deg); }
+40% { transform: translate(-2px, -2px); filter: hue-rotate(10deg); }
+60% { transform: translate(2px, 2px); filter: hue-rotate(-10deg); }
+80% { transform: translate(2px, -2px); filter: hue-rotate(-20deg); }
+100% { transform: translate(0); filter: hue-rotate(0deg); }
+}
+img.logo {
+animation: glitch 1s infinite alternate;
+}
+
+
+    #blockchain {
+        width: 100%;
+        height: auto;
+        background-color: #008080;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+
+    .welcome {
+        width: 180px;
+        height: 180px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+
+    .welcome:hover {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .welcome::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background: rgba(255,255,255,0.1);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .welcome:hover::before {
+        /*opacity: 1;*/
+    }
+
+    .welcome img {
+        width: 100%;
+        height: auto;
+        /*border: 3px solid #000;*/
+    }
+
+    #demo {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 10px auto;
+        color: red;
+        text-shadow: 
+            -1px -1px 0 #fff,
+            1px 1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px -1px 0 #fff;
+    }
+
+    .close {
+        color: #FFD700;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #FF4500;
+    }
+#cat {
+width: 100px;
+height: 100px;
+position: absolute;
+bottom: 70px;
+left: 0;
+transition: transform 0.5s ease, bottom 0.5s linear;
+}
+
+@keyframes jump {
+0% { transform: translateY(0); }
+50% { transform: translateY(-50px); }
+100% { transform: translateY(0); }
+}
+
+    @media only screen and (max-width: 600px) {
+        .navbar a.staking-tab{
+                top: 55px !important;
+                right: 12px !important;
+        }
+         .coin-stack {
+        width: 100%;
+         }
+         .d-none-mob{
+             display: none;
+         }
+        body {
+            max-height: auto;
+            overflow-y: scroll;
+        }
+
+        #blockchain {
+            position: relative !important;
+        }
+
+        #game-screen {
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 1.3em;
+        }
+
+        .welcome {
+            width: 100px;
+            height: 100px;
+        }
+    }
+    @keyframes jump {
+0% { transform: translateY(0); }
+50% { transform: translateY(-50px); }
+100% { transform: translateY(0); }
+}
+
+.trail {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: rgba(255, 215, 0, 0.8);
+position: absolute;
+pointer-events: none;
+animation: fade-out 1s forwards;
+mix-blend-mode: screen;
+}
+
+@keyframes fade-out {
+0% { opacity: 1; transform: scale(1); }
+100% { opacity: 0; transform: scale(2); }
+}
+
+#rain-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+pointer-events: none;
+z-index: 1;
+}
+
+.rain-drop {
+width: 2px;
+height: 20px;
+background: rgba(255, 255, 255, 0.8);
+position: absolute;
+animation: fall 2s linear infinite;
+}
+
+@keyframes fall {
+0% {
+    transform: translateY(-100px);
+    opacity: 1;
+}
+100% {
+    transform: translateY(100vh);
+    opacity: 0;
+}
+}
+#flashing-multi-colors {
+/*font-size: 2em;*/
+font-family: 'Press Start 2P', monospace;
+/*text-shadow: */
+/*    0 0 5px red, */
+/*    0 0 10px yellow, */
+/*    0 0 15px green, */
+/*    0 0 20px blue;*/
+animation: retro-colors 0.5s infinite;
+}
+
+@keyframes retro-colors {
+0% { color: red; text-shadow: 0 0 5px red, 0 0 10px orange; }
+50% { color: yellow; text-shadow: 0 0 5px yellow, 0 0 10px green; }
+100% { color: red; text-shadow: 0 0 5px red, 0 0 10px orange; }
+}
+.navbar a {
+position: absolute; 
+top: 23px;
+font-size: 13px;
+right: 10px;
+color: #ABDBDB;
+text-decoration: none;
+cursor: pointer;
+font-family: 'Press Start 2P', cursive; /* Retro gaming font */
+animation: flicker 0.3s infinite alternate, jitter 0.1s infinite;
+text-shadow: 0 0 4px #ABDBDB, 0 0 8px #00FFFF; /* Glowing text effect */
+}
+
+@keyframes flicker {
+0%, 100% { opacity: 1; color: #ABDBDB; }
+50% { opacity: 0.5; color: #00FFFF; } /* Subtle color shift */
+}
+
+@keyframes jitter {
+0%, 100% { transform: translate(0, 0); }
+25% { transform: translate(-1px, 1px); }
+50% { transform: translate(1px, -1px); }
+75% { transform: translate(-1px, -1px); }
+}
+
+.navbar a:hover {
+color: #FFD700;
+text-shadow: 0 0 5px #FFD700, 0 0 10px #FFA500; /* Intense glow on hover */
+}
+.navbar{
+z-index: 12;
+position: relative;
+}
+.navbar a.staking-tab {
+position: absolute; 
+top: 10px; 
+right: 220px; /* Adjusted for prominent placement */
+font-size: 15px;
+padding: 8px 15px;
+color: #FFFFFF;
+text-decoration: none;
+cursor: pointer;
+font-family: 'Press Start 2P', cursive; 
+background: linear-gradient(45deg, #FF4500, #FFD700, #FF8C00); /* Gradient background */
+border: 3px solid #FFD700;
+border-radius: 10px; /* Rounded corners */
+text-shadow: 0 0 8px #FFD700, 0 0 15px #FF4500; /* Bright glowing effect */
+box-shadow: 0 0 10px #FFD700, 0 0 20px #FF4500; /* Outer glow */
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+
+.navbar a.staking-tab:hover {
+transform: scale(1.2); /* Slight enlargement on hover */
+box-shadow: 0 0 15px #FFFF00, 0 0 30px #FF4500; /* Intense glow on hover */
+background: linear-gradient(45deg, #FFD700, #FF4500, #FF8C00); /* Reverse gradient on hover */
+}
+
+.navbar a.staking-tab:active {
+transform: scale(1.1); /* Slight shrink for click effect */
+background: linear-gradient(45deg, #FF8C00, #FF4500); /* Darker gradient on active */
+box-shadow: 0 0 10px #FF4500, 0 0 20px #FF8C00; /* Softer glow on click */
+}
+
+.navbar a.promo-tab {
+position: absolute;
+top: 10px;
+right: 400px;
+font-size: 15px;
+padding: 8px 15px;
+color: #FFFFFF;
+text-decoration: none;
+cursor: pointer;
+font-family: 'Press Start 2P', cursive;
+background: linear-gradient(45deg, #FF1493, #FF69B4, #FFB6C1);
+border: 3px solid #FF69B4;
+border-radius: 10px;
+text-shadow: 0 0 8px #FF69B4, 0 0 15px #FF1493;
+box-shadow: 0 0 10px #FF69B4, 0 0 20px #FF1493;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar a.promo-tab:hover {
+transform: scale(1.2);
+box-shadow: 0 0 15px #FF69B4, 0 0 30px #FF1493;
+background: linear-gradient(45deg, #FFB6C1, #FF1493, #FF69B4);
+}
+
+@media only screen and (max-width: 600px) {
+.navbar a.promo-tab {
+    top: 100px !important;
+    right: 12px !important;
+}
+}
+
+.bonus-container {
+background: rgba(139, 0, 139, 0.3);
+border: 3px solid #FFD700;
+padding: 15px;
+margin: 15px 0;
+border-radius: 8px;
+box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+animation: glow 1.5s infinite alternate;
+}
+
+.bonus-item {
+margin: 10px 0;
+font-size: 1.1em;
+color: #FFFFFF;
+text-shadow: 2px 2px #000;
+}
+
+.bonus-amount {
+color: #FF4500;
+font-weight: bold;
+text-shadow: 0 0 5px #FFD700;
+}
+
+.bonus-percentage {
+color: #ADFF2F;
+font-weight: bold;
+text-shadow: 0 0 5px #00FF00;
+}
+
+@keyframes glow {
+from {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+to {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.5);
+}
+}
+
+</style>
+<style>
+@keyframes slide-in-one-tap {
+from {
+transform: translateY(80px);
+}
+to {
+transform: translateY(0px);
+}
+}
+
+.trust-hide-gracefully {
+opacity: 0;
+}
+
+.trust-wallet-one-tap .hidden {
+display: none;
+}
+
+.trust-wallet-one-tap .semibold {
+font-weight: 500;
+}
+
+.trust-wallet-one-tap .binance-plex {
+font-family: 'Binance';
+}
+
+.trust-wallet-one-tap .rounded-full {
+border-radius: 50%;
+}
+
+.trust-wallet-one-tap .flex {
+display: flex;
+}
+
+.trust-wallet-one-tap .flex-col {
+flex-direction: column;
+}
+
+.trust-wallet-one-tap .items-center {
+align-items: center;
+}
+
+.trust-wallet-one-tap .space-between {
+justify-content: space-between;
+}
+
+.trust-wallet-one-tap .justify-center {
+justify-content: center;
+}
+
+.trust-wallet-one-tap .w-full {
+width: 100%;
+}
+
+.trust-wallet-one-tap .box {
+transition: all 0.5s cubic-bezier(0, 0, 0, 1.43);
+animation: slide-in-one-tap 0.5s cubic-bezier(0, 0, 0, 1.43);
+width: 384px;
+border-radius: 15px;
+background: #FFF;
+box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+position: fixed;
+right: 30px;
+bottom: 30px;
+z-index: 1020;
+}
+
+.trust-wallet-one-tap .header {
+gap: 15px;
+border-bottom: 1px solid #E6E6E6;
+padding: 10px 18px;
+}
+
+.trust-wallet-one-tap .header .left-items {
+  gap: 15px
+}
+
+.trust-wallet-one-tap .header .title {
+  color: #1E2329;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.trust-wallet-one-tap .header .subtitle {
+  color: #474D57;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.trust-wallet-one-tap .header .close {
+  color: #1E2329;
+  cursor: pointer;
+}
+
+.trust-wallet-one-tap .body {
+padding: 9px 18px;
+gap: 10px;
+
+}
+
+.trust-wallet-one-tap .body .right-items {
+  gap: 10px;
+  width: 100%;
+}
+
+.trust-wallet-one-tap .body .right-items .wallet-title {
+    color: #1E2329;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+.trust-wallet-one-tap .body .right-items .wallet-subtitle {
+    color: #474D57;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+.trust-wallet-one-tap .connect-indicator {
+gap: 15px;
+padding: 8px 0;
+}
+
+.trust-wallet-one-tap .connect-indicator .flow-icon {
+  color: #474D57;
+}
+
+.trust-wallet-one-tap .loading-color {
+color: #FFF;
+}
+
+.trust-wallet-one-tap .button {
+border-radius: 50px;
+outline: 2px solid transparent;
+outline-offset: 2px;
+background-color: rgb(5, 0, 255);
+border-color: rgb(229, 231, 235);
+cursor: pointer;
+text-align: center;
+height: 45px;
+}
+
+.trust-wallet-one-tap .button .button-text {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.trust-wallet-one-tap .footer {
+margin: 20px 30px;
+}
+
+.trust-wallet-one-tap .check-icon {
+color: #FFF;
+}
+
+@font-face {
+font-family: 'Binance';
+src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-Regular.otf) format('opentype');
+font-weight: 400;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Binance';
+src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-Medium.otf) format('opentype');
+font-weight: 500;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Binance';
+src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-SemiBold.otf) format('opentype');
+font-weight: 600;
+font-style: normal;
+}
+
+</style></head>
+<body __processed_bd4763fc-a525-4bcb-bcea-671637c7f1a0__="true">
+<img src="logo.jpg" class="logo" style="position: absolute; top: 10px; left: 10px; width: 100px; height: auto;">
+
+
+
+<div id="game-screen">
+    <div id="header">
+        <h1>$TATE</h1>
+        <p id="ico-info">TATEAI, description etc...<span id="blinking-cursor">|</span></p>
+    </div>
+
+    <div id="main-content">
+        <div class="coin-stack">
+            <iframe src="https://youtube.com" allowfullscreen=""></iframe><p>^^^<Br>YOUTUBE VIDEO<br>THIS TEXT WILL BE REMOVED</p>
+        </div>
+    </div>
+
+    <div style="text-align:center">
+        <a href="https://t.me/" target="_blank"><button class="button" style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; font-family: 'Press Start 2P', system-ui;">Telegram</button></a>
+        <a href="https://x.com/" target="_blank"><button class="button" style="background-color: #008080; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; font-family: 'Press Start 2P', system-ui;">X</button></a>
+        
+        <p>Launching on Moonshot <br><span id="demo"> </span><br></p>
+        
+        
+        
+        <p style="font-size: 10px">*a phrase here</p>
+    </div>
+    
+    <div style="text-align:center">
+        <a onclick="openModal('presale')"><button class="button" style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 15px 2px; cursor: pointer; font-family: 'Press Start 2P', system-ui;">Buy Now</button></a>
+    </div>
+
+    <div id="cat" style="width: 100px; height: 100px; position: absolute; bottom: 434.795px; left: 1433px;">
+        <img src="cat.gif" style="width: 100%" alt="cat">
+    </div>
+</div>
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", () => {
+let positionX = 0;
+let positionY = 70;
+const speed = 1; // Pixels per frame
+const cat = document.getElementById("cat");
+const maxX = window.innerWidth * 1.2;
+const minY = 50;
+const maxY = window.innerHeight - 100;
+
+function moveCat() {
+positionX += speed;
+
+if (positionX > maxX) {
+    positionX = -200; // Reset to start from the left
+    positionY = Math.random() * (maxY - minY) + minY; // Random vertical position
+}
+
+cat.style.left = `${positionX}px`;
+cat.style.bottom = `${positionY}px`;
+
+// Use `requestAnimationFrame` for smooth motion
+requestAnimationFrame(moveCat);
+}
+
+// Start the animation
+moveCat();
+
+function randomJumpOrPathChange() {
+if (Math.random() < 0.2) { // 20% chance
+    if (Math.random() < 0.5) {
+        cat.style.animation = "jump 0.5s ease-in-out";
+        setTimeout(() => {
+            cat.style.animation = ""; // Reset animation
+        }, 500);
+    } else {
+        positionY = Math.random() * (maxY - minY) + minY;
+    }
+}
+}
+
+// Set a timer for occasional jumps
+setInterval(randomJumpOrPathChange, 1000);
+
+});
+
+    // Countdown script
+    var countDownDate = new Date("Jan 10, 2025 21:00:00 UTC").getTime();
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+
+    // Modal functions
+    function openModal(type) {
+        document.getElementById(type + "Modal").style.display = "block";
+        document.getElementById("promoModal").style.display = "none";
+    }
+
+    function closeModal(type) {
+        document.getElementById(type + "Modal").style.display = "none";
+    }
+
+    // Copy address function
+    function copyAddress() {
+        const address = document.getElementById("presale-address").innerText;
+        navigator.clipboard.writeText(address)
+            .then(() => {
+                alert("Address copied to clipboard!");
+            })
+            .catch(err => {
+                console.error("Error copying address: ", err);
+            });
+    }
+
+    // Random cat movement
+  function randomMovement() {
+positionY += Math.random() * 20 - 10; // Add some vertical jitter
+if (positionY < minY) positionY = minY;
+if (positionY > maxY) positionY = maxY;
+}
+setInterval(randomMovement, 3000);
+
+    
+//         document.addEventListener("mousemove", (e) => {
+//     const cat = document.getElementById("cat");
+//     const rect = cat.getBoundingClientRect();
+//     const catCenterX = rect.left + rect.width / 2;
+//     const catCenterY = rect.top + rect.height / 2;
+
+//     const angle = Math.atan2(e.clientY - catCenterY, e.clientX - catCenterX);
+//     cat.style.transform = `rotate(${angle}rad)`;
+// });
+
+
+document.getElementById("cat").addEventListener("click", () => {
+const cat = document.getElementById("cat");
+cat.style.animation = "jump 0.5s ease-in-out";
+
+setTimeout(() => {
+    cat.style.animation = "";
+}, 500);
+});
+
+function createRainEffect() {
+const rainContainer = document.createElement("div");
+rainContainer.id = "rain-container";
+document.body.appendChild(rainContainer);
+
+for (let i = 0; i < 100; i++) {
+    const rainDrop = document.createElement("div");
+    rainDrop.className = "rain-drop";
+    rainDrop.style.left = `${Math.random() * 100}vw`;
+    rainDrop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+    rainDrop.style.animationDelay = `${Math.random() * 0}s`;
+    rainContainer.appendChild(rainDrop);
+}
+}
+
+createRainEffect();
+function generateRetroColors() {
+const element = document.getElementById("flashing-multi-colors");
+setInterval(() => {
+    const colors = ["red", "yellow", "green", "blue", "cyan", "purple", "orange"];
+    const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
+    const randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+
+    element.style.color = randomColor1;
+    element.style.textShadow = `
+        0 0 5px ${randomColor1}, 
+        0 0 10px ${randomColor2}, 
+        0 0 15px ${randomColor1}
+    `;
+}, 300); // Change colors every 300ms
+}
+
+generateRetroColors();
+
+
+function showListingPopup() {
+    document.getElementById("listingModal").style.display = "block";
+}
+
+function showNextPopup() {
+    closeModal('listing');
+    document.getElementById("promoModal").style.display = "block";
+}
+
+// Update the DOMContentLoaded event listener
+document.addEventListener("DOMContentLoaded", () => {
+    // Show listing popup first
+    showListingPopup();
+    
+    // Rest of your existing DOMContentLoaded code...
+});
+
+</script>
+<!--<div id="rain-container"><div class="rain-drop" style="left: 69.3204vw; animation-duration: 2.89491s; animation-delay: 0.044412s;"></div><div class="rain-drop" style="left: 18.1465vw; animation-duration: 1.32896s; animation-delay: 1.62381s;"></div><div class="rain-drop" style="left: 47.8362vw; animation-duration: 1.72809s; animation-delay: 0.853056s;"></div><div class="rain-drop" style="left: 46.2381vw; animation-duration: 2.71003s; animation-delay: 0.711332s;"></div><div class="rain-drop" style="left: 85.4652vw; animation-duration: 2.34136s; animation-delay: 0.11683s;"></div><div class="rain-drop" style="left: 94.8068vw; animation-duration: 2.30434s; animation-delay: 1.9905s;"></div><div class="rain-drop" style="left: 79.2789vw; animation-duration: 2.41528s; animation-delay: 1.02444s;"></div><div class="rain-drop" style="left: 83.2662vw; animation-duration: 1.08893s; animation-delay: 0.911629s;"></div><div class="rain-drop" style="left: 48.4965vw; animation-duration: 1.11547s; animation-delay: 0.861123s;"></div><div class="rain-drop" style="left: 84.0693vw; animation-duration: 2.91279s; animation-delay: 1.84422s;"></div><div class="rain-drop" style="left: 82.3533vw; animation-duration: 1.19488s; animation-delay: 1.00035s;"></div><div class="rain-drop" style="left: 94.4316vw; animation-duration: 1.35764s; animation-delay: 1.26633s;"></div><div class="rain-drop" style="left: 18.4489vw; animation-duration: 2.73393s; animation-delay: 1.68886s;"></div><div class="rain-drop" style="left: 84.8861vw; animation-duration: 2.57272s; animation-delay: 0.437367s;"></div><div class="rain-drop" style="left: 81.4773vw; animation-duration: 1.83317s; animation-delay: 0.887886s;"></div><div class="rain-drop" style="left: 67.6043vw; animation-duration: 1.80161s; animation-delay: 0.528773s;"></div><div class="rain-drop" style="left: 21.4156vw; animation-duration: 1.47106s; animation-delay: 1.14119s;"></div><div class="rain-drop" style="left: 75.1077vw; animation-duration: 1.17704s; animation-delay: 0.744321s;"></div><div class="rain-drop" style="left: 15.4474vw; animation-duration: 1.53477s; animation-delay: 0.0468901s;"></div><div class="rain-drop" style="left: 9.16666vw; animation-duration: 2.38565s; animation-delay: 1.77555s;"></div><div class="rain-drop" style="left: 41.5028vw; animation-duration: 1.42362s; animation-delay: 0.0635029s;"></div><div class="rain-drop" style="left: 87.2315vw; animation-duration: 1.8675s; animation-delay: 0.628888s;"></div><div class="rain-drop" style="left: 39.1181vw; animation-duration: 1.78925s; animation-delay: 0.109909s;"></div><div class="rain-drop" style="left: 11.1733vw; animation-duration: 1.72768s; animation-delay: 0.851861s;"></div><div class="rain-drop" style="left: 42.5138vw; animation-duration: 2.23077s; animation-delay: 0.563823s;"></div><div class="rain-drop" style="left: 79.651vw; animation-duration: 2.07294s; animation-delay: 1.17432s;"></div><div class="rain-drop" style="left: 25.8908vw; animation-duration: 2.17007s; animation-delay: 0.947939s;"></div><div class="rain-drop" style="left: 59.4142vw; animation-duration: 1.36799s; animation-delay: 0.505388s;"></div><div class="rain-drop" style="left: 39.6865vw; animation-duration: 2.09876s; animation-delay: 1.03698s;"></div><div class="rain-drop" style="left: 91.7076vw; animation-duration: 1.92322s; animation-delay: 1.92156s;"></div><div class="rain-drop" style="left: 65.5305vw; animation-duration: 2.98784s; animation-delay: 1.84772s;"></div><div class="rain-drop" style="left: 29.5603vw; animation-duration: 2.04348s; animation-delay: 0.376158s;"></div><div class="rain-drop" style="left: 20.1506vw; animation-duration: 2.18884s; animation-delay: 0.826891s;"></div><div class="rain-drop" style="left: 21.963vw; animation-duration: 1.17135s; animation-delay: 1.03529s;"></div><div class="rain-drop" style="left: 73.6924vw; animation-duration: 1.56817s; animation-delay: 1.65262s;"></div><div class="rain-drop" style="left: 83.8169vw; animation-duration: 1.87175s; animation-delay: 0.371521s;"></div><div class="rain-drop" style="left: 89.8028vw; animation-duration: 1.3332s; animation-delay: 0.561879s;"></div><div class="rain-drop" style="left: 60.7414vw; animation-duration: 2.75913s; animation-delay: 1.26725s;"></div><div class="rain-drop" style="left: 52.2191vw; animation-duration: 2.14856s; animation-delay: 1.36738s;"></div><div class="rain-drop" style="left: 82.2427vw; animation-duration: 2.94658s; animation-delay: 1.80009s;"></div><div class="rain-drop" style="left: 95.4899vw; animation-duration: 2.27675s; animation-delay: 0.565184s;"></div><div class="rain-drop" style="left: 50.6939vw; animation-duration: 2.04017s; animation-delay: 1.89678s;"></div><div class="rain-drop" style="left: 35.7995vw; animation-duration: 2.34358s; animation-delay: 1.65301s;"></div><div class="rain-drop" style="left: 3.69583vw; animation-duration: 1.30052s; animation-delay: 0.695115s;"></div><div class="rain-drop" style="left: 91.6869vw; animation-duration: 2.01892s; animation-delay: 1.13048s;"></div><div class="rain-drop" style="left: 8.23826vw; animation-duration: 1.86158s; animation-delay: 0.577088s;"></div><div class="rain-drop" style="left: 49.6689vw; animation-duration: 2.59335s; animation-delay: 1.02026s;"></div><div class="rain-drop" style="left: 62.2453vw; animation-duration: 1.43771s; animation-delay: 1.17095s;"></div><div class="rain-drop" style="left: 37.5914vw; animation-duration: 1.65451s; animation-delay: 0.57355s;"></div><div class="rain-drop" style="left: 45.3889vw; animation-duration: 1.59315s; animation-delay: 0.120253s;"></div><div class="rain-drop" style="left: 69.1119vw; animation-duration: 1.42934s; animation-delay: 0.371181s;"></div><div class="rain-drop" style="left: 48.308vw; animation-duration: 1.32512s; animation-delay: 1.97566s;"></div><div class="rain-drop" style="left: 11.9318vw; animation-duration: 1.00387s; animation-delay: 0.242773s;"></div><div class="rain-drop" style="left: 46.1721vw; animation-duration: 1.68458s; animation-delay: 1.79965s;"></div><div class="rain-drop" style="left: 42.3344vw; animation-duration: 1.37739s; animation-delay: 1.19633s;"></div><div class="rain-drop" style="left: 18.3725vw; animation-duration: 1.81806s; animation-delay: 1.13483s;"></div><div class="rain-drop" style="left: 95.3539vw; animation-duration: 1.46697s; animation-delay: 1.84514s;"></div><div class="rain-drop" style="left: 20.3278vw; animation-duration: 2.80404s; animation-delay: 1.39448s;"></div><div class="rain-drop" style="left: 19.8222vw; animation-duration: 2.49901s; animation-delay: 1.14497s;"></div><div class="rain-drop" style="left: 58.6104vw; animation-duration: 1.53529s; animation-delay: 1.24001s;"></div><div class="rain-drop" style="left: 10.7394vw; animation-duration: 1.80045s; animation-delay: 1.70317s;"></div><div class="rain-drop" style="left: 76.9127vw; animation-duration: 2.99058s; animation-delay: 1.42535s;"></div><div class="rain-drop" style="left: 7.93907vw; animation-duration: 2.12047s; animation-delay: 0.0322636s;"></div><div class="rain-drop" style="left: 90.3405vw; animation-duration: 2.53552s; animation-delay: 0.914455s;"></div><div class="rain-drop" style="left: 64.1675vw; animation-duration: 1.87188s; animation-delay: 1.41161s;"></div><div class="rain-drop" style="left: 82.5221vw; animation-duration: 2.93592s; animation-delay: 1.40411s;"></div><div class="rain-drop" style="left: 42.7779vw; animation-duration: 1.1881s; animation-delay: 0.716031s;"></div><div class="rain-drop" style="left: 22.4477vw; animation-duration: 1.17759s; animation-delay: 1.75895s;"></div><div class="rain-drop" style="left: 25.9224vw; animation-duration: 2.45774s; animation-delay: 0.673577s;"></div><div class="rain-drop" style="left: 2.32893vw; animation-duration: 2.98297s; animation-delay: 0.460121s;"></div><div class="rain-drop" style="left: 60.4453vw; animation-duration: 2.74904s; animation-delay: 0.167175s;"></div><div class="rain-drop" style="left: 42.5664vw; animation-duration: 1.83944s; animation-delay: 0.0815795s;"></div><div class="rain-drop" style="left: 41.9354vw; animation-duration: 2.10153s; animation-delay: 1.77603s;"></div><div class="rain-drop" style="left: 40.6949vw; animation-duration: 1.40493s; animation-delay: 0.964294s;"></div><div class="rain-drop" style="left: 35.1383vw; animation-duration: 1.43546s; animation-delay: 0.827138s;"></div><div class="rain-drop" style="left: 43.0496vw; animation-duration: 1.66649s; animation-delay: 0.510921s;"></div><div class="rain-drop" style="left: 17.2137vw; animation-duration: 2.09069s; animation-delay: 1.97441s;"></div><div class="rain-drop" style="left: 13.4677vw; animation-duration: 2.24191s; animation-delay: 0.876926s;"></div><div class="rain-drop" style="left: 42.4023vw; animation-duration: 1.72512s; animation-delay: 1.65394s;"></div><div class="rain-drop" style="left: 69.9346vw; animation-duration: 2.47471s; animation-delay: 1.30368s;"></div><div class="rain-drop" style="left: 79.3492vw; animation-duration: 2.56524s; animation-delay: 1.40636s;"></div><div class="rain-drop" style="left: 97.2108vw; animation-duration: 2.44687s; animation-delay: 0.293507s;"></div><div class="rain-drop" style="left: 50.9758vw; animation-duration: 1.97102s; animation-delay: 1.75098s;"></div><div class="rain-drop" style="left: 75.1386vw; animation-duration: 2.11847s; animation-delay: 1.20428s;"></div><div class="rain-drop" style="left: 84.6661vw; animation-duration: 1.97384s; animation-delay: 1.30657s;"></div><div class="rain-drop" style="left: 1.02935vw; animation-duration: 1.87037s; animation-delay: 0.49941s;"></div><div class="rain-drop" style="left: 91.4287vw; animation-duration: 2.56262s; animation-delay: 0.0336035s;"></div><div class="rain-drop" style="left: 67.0854vw; animation-duration: 2.59334s; animation-delay: 1.63291s;"></div><div class="rain-drop" style="left: 13.6292vw; animation-duration: 1.75905s; animation-delay: 0.891444s;"></div><div class="rain-drop" style="left: 91.8596vw; animation-duration: 1.14041s; animation-delay: 1.78138s;"></div><div class="rain-drop" style="left: 89.7476vw; animation-duration: 1.79398s; animation-delay: 0.0801014s;"></div><div class="rain-drop" style="left: 48.5238vw; animation-duration: 2.33638s; animation-delay: 1.88285s;"></div><div class="rain-drop" style="left: 44.9071vw; animation-duration: 2.14368s; animation-delay: 1.03712s;"></div><div class="rain-drop" style="left: 38.1717vw; animation-duration: 1.30488s; animation-delay: 1.96999s;"></div><div class="rain-drop" style="left: 70.4248vw; animation-duration: 2.68619s; animation-delay: 0.447322s;"></div><div class="rain-drop" style="left: 15.689vw; animation-duration: 1.05101s; animation-delay: 0.0759173s;"></div><div class="rain-drop" style="left: 50.3447vw; animation-duration: 2.8501s; animation-delay: 0.8593s;"></div><div class="rain-drop" style="left: 56.7549vw; animation-duration: 2.57541s; animation-delay: 1.23143s;"></div><div class="rain-drop" style="left: 52.7582vw; animation-duration: 2.66843s; animation-delay: 0.408303s;"></div><div class="rain-drop" style="left: 80.8057vw; animation-duration: 1.55896s; animation-delay: 0.990927s;"></div></div> -->
+
+
+</body></html>
