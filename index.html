@@ -72,8 +72,8 @@ fetch(apiUrl)
         background-color: #250000;
         background-image: linear-gradient(
             45deg, 
-            #570000, 
-            #250000
+            #000000, 
+            #202020
         );
         color: #FFD700;
         overflow-x: hidden;
@@ -711,13 +711,13 @@ font-style: normal;
 </style></head>
 <body __processed_bd4763fc-a525-4bcb-bcea-671637c7f1a0__="true">
 <img src="logo.jpg" class="logo" style="position: absolute; top: 10px; left: 10px; width: 100px; height: auto;">
-
+<a href="info.html" style="text-decoration:none"><p class="about" style="cursor: pointer; color: rgba(255, 255, 0, 0.8); text-align: right; margin-top: 25px; margin-right: 25px;">Info</p></a>
 
 
 <div id="game-screen">
     <div id="header">
-        <h1>$TATE</h1>
-        <p id="ico-info">TATEAI, description etc...<span id="blinking-cursor">|</span></p>
+        <h1>$TATEAI</h1>
+        <p id="ico-info">Description etc...<span id="blinking-cursor"></span></p>
     </div>
 
     <div id="main-content">
@@ -795,7 +795,7 @@ setInterval(randomJumpOrPathChange, 1000);
 });
 
     // Countdown script
-    var countDownDate = new Date("Jan 10, 2025 21:00:00 UTC").getTime();
+    var countDownDate = new Date("Jan 12, 2025 21:00:00 UTC").getTime();
     var x = setInterval(function() {
         var now = new Date().getTime();
         var distance = countDownDate - now;
@@ -837,9 +837,9 @@ setInterval(randomJumpOrPathChange, 1000);
 
     // Random cat movement
   function randomMovement() {
-positionY += Math.random() * 20 - 10; // Add some vertical jitter
-if (positionY < minY) positionY = minY;
-if (positionY > maxY) positionY = maxY;
+    positionY += Math.random() * 20 - 10; // Add some vertical jitter
+    if (positionY < minY) positionY = minY;
+    if (positionY > maxY) positionY = maxY;
 }
 setInterval(randomMovement, 3000);
 
